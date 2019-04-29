@@ -1,0 +1,8 @@
+function [s,S]=myPartialSum(n)
+
+s=0; S=0;
+
+for j=1:n
+    s = s+1/j
+end
+

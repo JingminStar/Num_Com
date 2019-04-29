@@ -1,0 +1,186 @@
+
+% A quick introduction to Matlab
+% also with some aspects of numerical computing
+% Reference: JBF18, textbook, matlab guide by D. Higham and N. Higham
+% 
+% 2019.01.06
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ##### Part I ######################
+% to create a log file based on the command window contents
+diary matlab_intro1.txt  
+
+% variables
+a = -1.5
+A =  1
+b = a-A    % to illustrate variables being case-sensitive
+b = a-A;   % not to show the answer on the screen: include a semicolon at the end
+c = i    % complex number:  i^2=-1
+cc = i*i
+d = pi     % built-in variable 
+           % by default: format short
+
+% standard arithmetic: 
+x = a+b
+y = 1/c    
+
+
+% built-in functions: 
+A = abs(a)
+B = cos(b)
+C = abs(c)   
+D = sqrt(d)
+X = C^(3/4)
+Y = C^3/4   % standard convention for ordering of operators (proper use of bracket) 
+Z = log(A)   % note: log -- national log; log10 -- base 10
+
+% to find out more about a function
+help log     % will also find out some relevant functions or commands 
+
+% or if you don't know exactly what you are looking for 
+lookfor log
+
+% to see all variables in the workspace
+who
+
+% to delete one variable
+clear a
+who
+
+% to delete all variables: use "clear" or "clear all"
+clear all
+who
+
+diary off
+
+% to see the content of the diary 
+type matlab_intro2.txt
+
+% ##### Part II ######################
+diary matlab_intro2.txt
+
+% matlab variables are "double precision" by default 
+a = pi 
+b = atan(1)*4000    % format short by default
+format long
+a
+format longe      % long scientific notation (no need for demo)
+a
+format longg      % Long, fixed-decimal format or scientific notation, whichever is more compact
+a
+
+% Matlab was really written to deal with vectors and matrices: vectorization is preferred 
+A = [1,2,3; 4,5,6; 7,8,9]
+x = [3;pi;-1]
+
+% matrix-vector multiplication: make sure the dimensions match
+b = A*x
+c = x*x  % will not work!!
+
+
+% to change a specific entry
+A(2,3) = 1.1    % row and column index
+
+% to get a column
+A(:,1)
+
+% or a row
+A(2,:)
+
+% or from a specified ranges
+A([1,3], 1:2)
+
+% matrix-matrix multiplication
+A*A*A
+
+% or more compactly
+A^3
+
+% but .^ raises each entry to the power (this works also for +,-,/)
+A.^3
+
+% the transpose
+B = A+i*rand(size(A))
+B’     % conjugate transpose
+B.’    % transpose
+A’-A.’  % no difference for real-valued matrix
+
+det(A)
+
+rank(A)
+  
+% magic backslash 
+B = rand(3,3);
+x = rand(3,1);
+y = B*x;
+xc = B\y;
+xc-x
+
+yy = A*x;
+xxc = A\yy;
+xxc-x   % result incorrect??
+
+%  conditioning of the problem: ill- or well-conditioned, pure vs computational math
+cond(A)
+cond(B)
+
+
+diary off
+
+% ##### Part III ######################
+diary matlab_intro_3.txt
+
+% functions
+a = exp(1)  % built-in
+myFun = @(x) exp(x) + 3  $ user-defined 
+myFun(1)
+myFun(1)-a
+
+MyFun1 = @(x, y) x^2+y^2;
+MyFun1(1,2)
+MyFun1([1,2], [2,3])  % Error message: incorrect dimensions
+
+MyFun2 = @(x, y) x.^2+y.^2;
+MyFun2([1,2], [2,3]) 
+
+% the definition with @ assign a handle to the function, that can be passed to another function
+myDiff = @(f, x, h) (f(x+h)-f(x-h))/(2*h)
+myDiff(myFun, 0, 0.01)
+myDiff(@exp, 0, 0.01)   % results are not identical! round-off
+
+% to define a more complicated functions: use script 
+% show myPartialSum
+
+[s, S] = myPartialSum(10);
+format long
+s-S
+[s, S] = myPartialSum(10^3);
+s-S
+[s, S] = myPartialSum(10^6);
+s-S
+
+% to write a code to carry out these repeated tasks
+demo_PartialSum
+
+% final note: and in  myPartialSum.m, demo_PartialSum.m, for loop is used: flow control
+
+
+% Plotting can be useful in matlab 
+N = 50;
+xL = 0;
+xR = 1;
+x = linspace(xLeft,xRight,N); 
+y = sin(x);
+plot(x,y);
+hold on;
+plot(x,cos(x),’r*’);
+
+% open a new figure
+figure(2)
+plot(x,y,’b.-’, x,cos(x),’r*’);
+grid on
+xlabel( 'x' );   % Alternatively: add interactively to figures
+ylabel( 'y' );
+title( 'stuff' );
+
+diary off

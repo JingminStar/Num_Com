@@ -1,0 +1,337 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{fullpage}
+\usepackage{mathrsfs}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{listings}
+\renewcommand{\baselinestretch}{1.1}
+\pagestyle{empty}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Matlab,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+\begin{document}
+\noindent{\bf Homework 4}
+
+\noindent{\bf Jingmin Sun}
+
+\noindent{\bf 661849071}
+
+
+\begin{enumerate}
+\item
+
+Firstly, we can get U first, which is \begin{align*}
+A=&\begin{bmatrix}
+1&-1&1&2\\0&2&1&0\\1&3&4&4\\0&2&1&-1
+\end{bmatrix}\\
+\underrightarrow{R_3-R_1\rightarrow R_3}&\begin{bmatrix}
+1&-1&1&2\\0&2&1&0\\0&4&3&2\\0&2&1&-1
+\end{bmatrix}\\
+\underrightarrow{R_3-2R_2\rightarrow R_3}&\begin{bmatrix}
+1&-1&1&2\\0&2&1&0\\0&0&1&2\\0&2&1&-1
+\end{bmatrix}\\
+\underrightarrow{R_4-R_2\rightarrow R_4}&\begin{bmatrix}
+1&-1&1&2\\0&2&1&0\\0&0&1&2\\0&0&0&-1
+\end{bmatrix}=U\\
+\end{align*}
+
+From the operations above, we can observe that \begin{align*}
+\begin{bmatrix}
+1&0&0&0\\0&1&0&0\\0&0&1&0\\0&-1&0&1
+\end{bmatrix}\begin{bmatrix}
+1&0&0&0\\0&1&0&0\\0&-2&1&0\\0&0&0&1
+\end{bmatrix}\begin{bmatrix}
+1&0&0&0\\0&1&0&0\\-1&0&1&0\\0&0&0&1
+\end{bmatrix}A &= U\\
+ \begin{bmatrix}
+1&0&0&0\\0&1&0&0\\0&-2&1&0\\0&-1&0&1
+\end{bmatrix}\begin{bmatrix}
+1&0&0&0\\0&1&0&0\\-1&0&1&0\\0&0&0&1
+\end{bmatrix}A &= U\\
+ \begin{bmatrix}
+1&0&0&0\\0&1&0&0\\-1&-2&1&0\\0&-1&0&1
+\end{bmatrix}A &= U\\
+\end{align*}\begin{align*}
+\therefore L&=  \begin{bmatrix}
+1&0&0&0\\0&1&0&0\\-1&-2&1&0\\0&-1&0&1
+\end{bmatrix}^{-1}\\&= \begin{bmatrix}
+1&0&0&0\\0&1&0&0\\1&2&1&0\\0&1&0&1
+\end{bmatrix}
+\end{align*}
+
+We can check by matlab that $A= LU$
+\lstinputlisting[language=Matlab,caption={Check1}]{check.txt}
+
+Now, we can solve $Ly = b$ by forward substitution that \begin{align*}
+\begin{bmatrix}
+1&0&0&0\\0&1&0&0\\1&2&1&0\\0&1&0&1
+\end{bmatrix} y &=\begin{bmatrix}
+3\\2\\11\\1
+\end{bmatrix}\\
+y_1&=3\\
+y_2&=2\\
+y_1+2y_2+y_3&=11\\
+3+4+y_3&=11\\
+y_3&=4\\
+y_2+y_4&=1\\
+2+y_4&=1\\
+y_4&=-1\\
+\therefore y&=\begin{bmatrix}
+3\\2\\4\\-1
+\end{bmatrix}\\
+\end{align*} 
+
+Next, we can solve the system that $Ux = y$, which is \begin{align*}
+\begin{bmatrix}
+1&-1&1&2\\0&2&1&0\\0&0&1&2\\0&0&0&-1
+\end{bmatrix}x &=\begin{bmatrix}
+3\\2\\4\\-1
+\end{bmatrix}\\
+-x_4 &=-1\\x_4&=1\\x_3+2x_4&=4\\x_3+2&=4\\x_3&=2\\2x_2+x_3&=2\\2x_2+2&=2\\x_2&=0\\x_1-x_2+x_3+2x_4&=3\\x_1+4&=3\\x_1&=-1\\x&=\begin{bmatrix}
+-1\\0\\2\\1
+\end{bmatrix}
+\end{align*}
+
+And we can check the answer by Matlab:
+\lstinputlisting[language=Matlab,caption={Check2}]{check1.txt}
+
+\item
+\begin{itemize}
+\item
+To change row 1 and row 4 and negate row 2, we can multiply B by $ P=\begin{bmatrix}
+0&0&0&1\\0&-1&0&0\\0&0&1&0\\1&0&0&0
+\end{bmatrix} $, and $PB$ is the answer we deserved.
+\item 
+To get C, we need multiply B by the matrix $Q=\begin{bmatrix}
+1&0&0&0\\0&0&5&0\\-2&0&0&1\\1&0&0&0
+\end{bmatrix}$, which means $ C = QB$
+\end{itemize}
+\item
+\begin{itemize}
+\item
+\begin{align*}
+\because A&=\begin{bmatrix}
+1&2\\1+\delta&2
+\end{bmatrix}\\\therefore A^{-1} &=\begin{bmatrix}
+-\frac{1}{\delta}&\frac{1}{\delta}\\
+\frac{1+\delta}{2\delta}&-\frac{1}{2\delta}
+\end{bmatrix}\\
+\mbox{cond}(A,\infty)&=||A||_\infty||A^{-1}||_\infty \\&=|3+\delta|\cdot|\frac{2}{\delta}|\\&=\left|\dfrac{2(3+\delta)}{\delta}\right|\\&=\left|\dfrac{6+2\delta}{\delta}\right|\\
+\mbox{ When }\delta &=10^{-2}\\
+\mbox{cond}(A,\infty)&=\left|\dfrac{6.02}{0.01}\right|\\&=602\\
+\mbox{ When }\delta &=10^{-6}\\
+\mbox{cond}(A,\infty)&=\left|\dfrac{6+2\cdot 10^{-6}}{ 10^{-6}}\right|\\&=6000002\\
+\mbox{ When }\delta &=10^{-8}\\
+\mbox{cond}(A,\infty)&=\left|\dfrac{6+2\cdot 10^{-8}}{ 10^{-8}}\right|\\&=600000002\\
+\end{align*}
+\item
+We can write a code to calculate $x_c$ and relative error: \lstinputlisting[language=Matlab,caption={compare.m}]{compare.m}
+and the output follows:
+\lstinputlisting[language=Matlab,caption={Output}]{third.txt}
+so by comparing the exponential part of the relative error and condition number of A, we can observe that relative error is approximately equals to $\alpha\cdot \mbox{cond}(A)$, where $\alpha\approx 10^{-16}$.
+Since
+\lstinputlisting[language=Matlab,caption={Epsilon}]{epsilon.txt}
+so we can conclude that $\dfrac{||\vec{x} - \vec{x_c}||}{||\vec{x}||} \approx \epsilon_{mach}\cdot \mbox{cond}(A)$
+\end{itemize}
+\item
+\begin{itemize}
+\item
+Firstly, we need to show that A is symmetric, which is \begin{align*}
+A^T = \begin{bmatrix}
+1&3\\3&10
+\end{bmatrix} =A
+\end{align*}
+So that A is symmetric.
+
+Second, we need to show that A is positive definite that \begin{align*}
+x^TAx&=\begin{bmatrix}
+x_1&x_2
+\end{bmatrix}\begin{bmatrix}
+1&3\\3&10
+\end{bmatrix}\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix}\\
+&=\begin{bmatrix}
+x_1+3x_2&3x_1+10x_2
+\end{bmatrix}\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix}\\
+&=x_1^2+6x_1x_2+10x_2^2\\
+&=x_1^2+6x_1x_2+9x_2^2+x_2^2\\
+&=(x_1+3x_2)^2+x_2^2 
+\end{align*}
+Since $(x_1+3x_2)^2+x_2^2 \geq 0$, and $(x_1+3x_2)^2+x_2^2 = 0 \iff x_1=x_2 =0$, which means $x=\vec{0}$, so that A is positive definite.
+\item
+Firstly, we need to show that A is symmetric, which is \begin{align*}
+A^T = \begin{bmatrix}
+1&-1\\-1&0
+\end{bmatrix} =A
+\end{align*}
+So that A is symmetric.
+
+But we can observe that $|a_{12}| =1 , |a_{22}| =0$, and $|a_{12}| > |a_{22}|$ follows, so the greatest element is off diagonal, so A is not positive definite.
+%Second, we need to show that A is positive definite that \begin{align*}
+%x^TAx&=\begin{bmatrix}
+%x_1&x_2
+%\end{bmatrix}\begin{bmatrix}
+%1&-1\\-1&0
+%\end{bmatrix}\begin{bmatrix}
+%x_1\\x_2
+%\end{bmatrix}\\
+%&=\begin{bmatrix}
+%x_1-x_2&-x_1
+%\end{bmatrix}\begin{bmatrix}
+%x_1\\x_2
+%\end{bmatrix}\\
+%&=x_1^2-2x_1x_2
+%\end{align*}
+%Since when $x_1=1, x_2=2$, $x^TAx =1-4 = -3$, so that A is not positive definite.
+\item
+Firstly, we need to show that A is symmetric, which is \begin{align*}
+A^T = \begin{bmatrix}
+2&4\\4&3
+\end{bmatrix} =A
+\end{align*}
+So that A is symmetric.
+
+But we can observe that $\det(A) = 2\cdot 3 - 4\cdot 4 = 12-16=-4 <0$, so A is not positive definite.
+\iffalse
+Second, we need to show that A is positive definite that \begin{align*}
+x^TAx&=\begin{bmatrix}
+x_1&x_2
+\end{bmatrix}\begin{bmatrix}
+2&4\\4&3
+\end{bmatrix}\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix}\\
+&=\begin{bmatrix}
+2x_1+4x_2&4x_1+3x_2
+\end{bmatrix}\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix}\\
+&=2x_1^2+8x_1x_2+3x_2^2\\
+&=2(x_1^2+4x_1x_2+\frac{3}{2}x_2^2)\\
+&=2((x_1+2x_2)^2 - \frac{5}{2}x_2^2)
+\end{align*}
+Since when $x_1=1, x_2=4$, $x^TAx =2\cdot(25- \frac{5}{2}\cdot 4^2) = 2\cdot(-15) = -30$, so that A is not positive definite.
+\fi
+\end{itemize}
+
+\item
+\begin{align*}
+A &= \begin{bmatrix}
+2&-1&0&0\\-1&2&-1&0\\0&-1&2&-1\\0&0&-1&2
+\end{bmatrix}\\
+\end{align*}
+
+We can firstly check whether it is positive definite:
+
+\begin{align*}
+x^TAx&=\begin{bmatrix}
+x_1&x_2&x_3&x_4
+\end{bmatrix}\begin{bmatrix}
+2&-1&0&0\\-1&2&-1&0\\0&-1&2&-1\\0&0&-1&2
+\end{bmatrix}\begin{bmatrix}
+x_1\\x_2\\x_3\\x_4
+\end{bmatrix}\\
+&=\begin{bmatrix}
+2x_1-x_2&-x_1+2x_2-x_3&-x_2+2x_3-x_4&-x_3+2x_4
+\end{bmatrix}\begin{bmatrix}
+x_1\\x_2\\x_3\\x_4
+\end{bmatrix}\\
+&=2x_1^2-x_1x_2-x_1x_2+2x_2^2-x_2x_3-x_2x_3+2x_3^2-x_3x_4-x_3x_4+2x_4^2\\&=x_1^2+(x_1^2-2x_1x_2+x_2^2)+(x_2^2-2x_2x_3+x_2^3)+(x_3^2-2x_3x_4+x_4^2)+x_4^2\\
+&=x_1^2+(x_1-x_2)^2+(x_2-x_3)^2+(x_3-x_4)^2+x_4^2>0
+\end{align*}
+
+Therefore, A is positive definite, and we can easily observe that A is symmetric, so A is a spd matrix.
+
+\begin{align*}
+A& = \begin{bmatrix}
+r_{11}&0&0&0\\
+r_{12}&r_{22}&0&0\\
+r_{13}&r_{23}&r_{33}&0\\
+r_{14}&r_{24}&r_{34}&r_{44}\\
+\end{bmatrix} \begin{bmatrix}
+r_{11}&r_{12}&r_{13}&r_{14}\\
+0&r_{22}&r_{23}&r_{24}\\
+0&0&r_{33}&r_{34}\\
+0&0&0&r_{44}
+\end{bmatrix}\\
+&=\begin{bmatrix}
+r_{11}^2&r_{11}r_{12}&r_{11}r_{13}&r_{11}r_{14}\\
+r_{11}r_{12}&r_{12}^2+r_{22}^2&r_{12}r_{13}+r_{22}r_{23}&r_{12}r_{14}+r_{22}r_{24}\\
+r_{11}r_{13}&r_{12}r_{13}+r_{22}r_{23}&r_{13}^2+r_{23}^2+r_{33}^2 &r_{13}r_{14}+r_{23}r_{24}+r_{33}r_{34}\\
+r_{11}r_{14}&r_{12}r_{14}+r_{22}r_{24}&r_{13}r_{14}+r_{23}r_{24}+r_{33}r_{34}&r_{14}^2+r_{24}^2+r_{34}^2+r_{44}^2
+\end{bmatrix}\\
+\end{align*}
+\begin{align*}
+\therefore r_{11}^2 &=2\\
+r_{11}&=\sqrt{2}\\
+r_{11}r_{12}&=-1\\
+\therefore r_{12}&=-\frac{\sqrt{2}}{2}\\
+r_{11}r_{13}&=r_{11}r_{14}=0\\
+r_{13}&=r_{14}=0\\
+r_{12}^2+r_{22}^2&=2\\
+r_{22}&=\frac{\sqrt{6}}{2}\\
+r_{12}r_{13}+r_{22}r_{23}&=-1\\
+r_{23}&=-\frac{\sqrt{6}}{3}\\
+r_{12}r_{14}+r_{22}r_{24}&=0\\
+\end{align*}
+\begin{align*}
+r_{24}&=0\\r_{13}^2+r_{23}^2+r_{33}^2&=2\\
+r_{33}^2&=\frac{4}{3}\\r_{33}&=\frac{2\sqrt{3}}{3}\\
+r_{13}r_{14}+r_{23}r_{24}+r_{33}r_{34}&=-1\\
+r_{34}&=-\frac{\sqrt{3}}{2}\\
+r_{14}^2+r_{24}^2+r_{34}^2+r_{44}^2&=2\\
+r_{44}^2&=\frac{5}{4}\\
+r_{44}&=\frac{\sqrt{5}}{2}\\
+\therefore A&=\begin{bmatrix}
+r_{11}&0&0&0\\
+r_{12}&r_{22}&0&0\\
+r_{13}&r_{23}&r_{33}&0\\
+r_{14}&r_{24}&r_{34}&r_{44}\\
+\end{bmatrix} \begin{bmatrix}
+r_{11}&r_{12}&r_{13}&r_{14}\\
+0&r_{22}&r_{23}&r_{24}\\
+0&0&r_{33}&r_{34}\\
+0&0&0&r_{44}
+\end{bmatrix}\\&=\begin{bmatrix}
+\sqrt{2}&0&0&0\\
+-\frac{\sqrt{2}}{2}&\frac{\sqrt{6}}{2}&0&0\\
+0&-\frac{\sqrt{6}}{3}&\frac{2\sqrt{3}}{3}&0\\
+0&0&-\frac{\sqrt{3}}{2}&\frac{\sqrt{5}}{2}\\
+\end{bmatrix} \begin{bmatrix}
+\sqrt{2}&-\frac{\sqrt{2}}{2}&0&0\\
+0&\frac{\sqrt{6}}{2}&-\frac{\sqrt{6}}{3}&0\\
+0&0&\frac{2\sqrt{3}}{3}&-\frac{\sqrt{3}}{2}\\
+0&0&0&\frac{\sqrt{5}}{2}
+\end{bmatrix}\\
+\therefore R&=\begin{bmatrix}
+\sqrt{2}&-\frac{\sqrt{2}}{2}&0&0\\
+0&\frac{\sqrt{6}}{2}&-\frac{\sqrt{6}}{3}&0\\
+0&0&\frac{2\sqrt{3}}{3}&-\frac{\sqrt{3}}{2}\\
+0&0&0&\frac{\sqrt{5}}{2}
+\end{bmatrix}\\`
+\end{align*}
+\end{enumerate}
+
+\end{document}

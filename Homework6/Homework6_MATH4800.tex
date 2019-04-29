@@ -1,0 +1,219 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{fullpage}
+\usepackage{mathrsfs}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{multirow}
+\renewcommand{\baselinestretch}{1.1}
+\pagestyle{empty}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Matlab,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+\begin{document}
+\noindent{\bf Homework 6}
+
+\noindent{\bf Jingmin Sun}
+
+\noindent{\bf 661849071}
+
+
+\begin{enumerate}
+\item
+\begin{itemize}
+\item
+If $b \in $ span$(A)$, then the system is solvable.
+\item
+When the column of $A$ is linear independent.
+\item
+For example, $A = \begin{bmatrix}
+1&2&3\\1&3&4\\1&4&5\\1&5&6
+\end{bmatrix}$, $ b = \begin{bmatrix}
+3\\4\\5\\6
+\end{bmatrix}$, and we can get $x =\begin{bmatrix}
+1\\1\\0
+\end{bmatrix}$, or $x =\begin{bmatrix}
+0\\0\\1
+\end{bmatrix}$
+\end{itemize}
+\item
+Quadratic fitting: Look for $f(x) = a_0+a_1x+x_2x^2$, which means \begin{align*}
+A\begin{bmatrix}
+a_1\\a_2\\a_3
+\end{bmatrix}&=\begin{bmatrix}
+2\\2\\1\\3
+\end{bmatrix}\\
+\mbox{ where }A &=\begin{bmatrix}
+1&1&1\\1&3&9\\1&4&16\\1&6&36
+\end{bmatrix}
+\end{align*}
+Since we want to solve this system in the least square sense, we would like to solve the norm equation instead, which is \begin{align*}
+A^TA\tilde{a}&=A^Tb\\
+A^TA&=\begin{bmatrix}
+1&1&1&1\\1&3&4&6\\1&9&16&36
+\end{bmatrix}\begin{bmatrix}
+1&1&1\\1&3&9\\1&4&16\\1&6&36
+\end{bmatrix}\\
+&=\begin{bmatrix}
+4&14&62\\14&62&308\\62&308&1634
+\end{bmatrix}\\
+A^Tb&=\begin{bmatrix}
+1&1&1&1\\1&3&4&6\\1&9&16&36
+\end{bmatrix}\begin{bmatrix}
+2\\2\\1\\3
+\end{bmatrix}\\&=\begin{bmatrix}
+8\\30\\144
+\end{bmatrix}\\
+\therefore \tilde{a}&=\begin{bmatrix}
+\frac{77}{26}\\-\frac{79}{78}\\\frac{1}{6}
+\end{bmatrix}
+\end{align*}
+Since RMSE$ = \sqrt{\dfrac{SE}{m}}$, so \begin{align*}
+\sqrt{\dfrac{SE}{m}}&=\sqrt{\dfrac{||r||^2}{m}}\\
+&=\sqrt{\dfrac{(Aa-b)^T(Aa-b)}{m}}\\
+Aa-b&=\begin{bmatrix}
+1&1&1\\1&3&9\\1&4&16\\1&6&36
+\end{bmatrix}\begin{bmatrix}
+\frac{77}{26}\\-\frac{79}{78}\\\frac{1}{6}
+\end{bmatrix}-\begin{bmatrix}
+2\\2\\1\\3
+\end{bmatrix}\\
+&=\begin{bmatrix}
+\frac{3}{26}\\
+-\frac{15}{26}\\
+\frac{15}{26}\\
+-\frac{3}{26}\\
+\end{bmatrix}\\
+\sqrt{\dfrac{SE}{m}}&=\sqrt{\dfrac{9/13}{4}}\\
+&=0.416
+\end{align*}
+\item
+We need to find $z = c_1+c_2x+c_3y$, so we can have the linear system\begin{align*}
+Ac&=z\\
+c=\begin{bmatrix}
+c_1\\c_2\\c_3
+\end{bmatrix}
+&A=\begin{bmatrix}
+1&0&0\\1&0&1\\1&1&0\\1&1&1\\1&1&2
+\end{bmatrix} z=\begin{bmatrix}
+3\\2\\3\\5\\6
+\end{bmatrix}\\
+\end{align*}
+Since in least square sense, so \begin{align*}
+A^TAc &=A^Tz\\
+A^TA&=\begin{bmatrix}
+1&1&1&1&1\\0&0&1&1&1\\0&1&0&1&2
+\end{bmatrix}\begin{bmatrix}
+1&0&0\\1&0&1\\1&1&0\\1&1&1\\1&1&2
+\end{bmatrix}\\
+&=\begin{bmatrix}
+5&3&4\\3&3&3\\4&3&6
+\end{bmatrix}\\
+\end{align*}\begin{align*}
+A^Tz&=\begin{bmatrix}
+19\\14\\19
+\end{bmatrix}\\
+c &= \begin{bmatrix}
+2\\\frac{5}{3}\\1
+\end{bmatrix}\\
+\therefore z&=2+\dfrac{5}{3}x+y
+\end{align*}
+\item
+We need to solve $f(t) = c_1+c_2\cos 2\pi t+c_3\sin 2\pi t$, which is equivalent to solve \begin{align*}
+Ac&=y\\
+A &= \begin{bmatrix}
+1&\cos(0)&\sin(0)\\
+1&\cos(\pi)&\sin(\pi)\\
+1&\cos(2\pi)&\sin(2\pi)\\
+1&\cos(3\pi)&\sin(3\pi)\\
+\end{bmatrix}\\
+&=\begin{bmatrix}
+1&1&0\\
+1&-1&0\\
+1&1&0\\
+1&-1&0\\
+\end{bmatrix}\\
+c = \begin{bmatrix}
+c_1\\c_2\\c_3
+\end{bmatrix}&y =\begin{bmatrix}
+3\\1\\3\\2
+\end{bmatrix}
+\end{align*}
+Since we need to solve it in the least square sense, which means \begin{align*}
+A^TAc&=A^Ty\\
+A^TA&=\begin{bmatrix}
+1&1&1&1\\1&-1&1&-1\\0&0&0&0
+\end{bmatrix}\begin{bmatrix}
+1&1&0\\
+1&-1&0\\
+1&1&0\\
+1&-1&0\\
+\end{bmatrix}\\
+&=\begin{bmatrix}
+4&0&0\\0&4&0\\0&0&0
+\end{bmatrix}\\
+A^Ty &=\begin{bmatrix}
+1&1&1&1\\1&-1&1&-1\\0&0&0&0
+\end{bmatrix} \begin{bmatrix}
+3\\1\\3\\2
+\end{bmatrix}\\
+&=\begin{bmatrix}
+9\\3\\0
+\end{bmatrix}\\
+\end{align*}\begin{align*}
+c&=\begin{bmatrix}
+\frac{9}{4}\\\frac{3}{4}\\c_3
+\end{bmatrix}\\
+\therefore f(t)&=\dfrac{9}{4}+\dfrac{3}{4}\cos 2 \pi t+c_3 \sin 2\pi t\\
+\end{align*}
+The error is \begin{align*}
+r&=y-Ac\\
+&=\begin{bmatrix}
+3\\1\\3\\2
+\end{bmatrix}-\begin{bmatrix}
+1&1&0\\
+1&-1&0\\
+1&1&0\\
+1&-1&0\\
+\end{bmatrix}\begin{bmatrix}
+\frac{9}{4}\\\frac{3}{4}\\c_3
+\end{bmatrix}\\
+&=\begin{bmatrix}
+3\\1\\3\\2
+\end{bmatrix}-\begin{bmatrix}
+3\\\frac{3}{2}\\3\\\frac{3}{2}
+\end{bmatrix}\\
+&=\begin{bmatrix}
+0\\-\frac{1}{2}\\0\\\frac{1}{2}
+\end{bmatrix}
+\end{align*}
+And 2-norm error is \begin{align*}
+||r||_2&=\sqrt{||r||^2}\\
+&=\sqrt{\dfrac{1}{2}}\\&=\dfrac{\sqrt{2}}{2}
+\end{align*}
+RMSE :\begin{align*}
+\sqrt{\dfrac{||r||^2}{4}}&=\sqrt{\dfrac{\frac{1}{2}}{4}}\\
+&=\dfrac{\sqrt{2}}{4}
+\end{align*}
+\end{enumerate}
+
+\end{document}

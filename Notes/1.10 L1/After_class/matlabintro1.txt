@@ -1,0 +1,117 @@
+a=-1.5
+
+a =
+
+   -1.5000
+
+a=-1.5;
+A = 1
+
+A =
+
+     1
+
+a-A
+
+ans =
+
+   -2.5000
+
+c = i
+
+c =
+
+   0.0000 + 1.0000i
+
+i*i
+
+ans =
+
+    -1
+
+pi
+
+ans =
+
+    3.1416
+
+d = pi
+
+d =
+
+    3.1416
+
+x = a+b
+{Undefined function or variable 'b'.
+} 
+b = 3.2;
+x= a+b
+
+x =
+
+    1.7000
+
+y =1/c
+
+y =
+
+   0.0000 - 1.0000i
+
+A = abs(a)
+
+A =
+
+    1.5000
+
+B = cos(b)
+
+B =
+
+   -0.9983
+
+D = sqrt(3)
+
+D =
+
+    1.7321
+
+3 ^ (1/2)
+
+ans =
+
+    1.7321
+
+Z = log(D)
+
+Z =
+
+    0.5493
+
+help log
+ <strong>log</strong>    Natural logarithm.
+    <strong>log</strong>(X) is the natural logarithm of the elements of X.
+    Complex results are produced if X is not positive.
+ 
+    See also <a href="matlab:help log1p">log1p</a>, <a href="matlab:help log2">log2</a>, <a href="matlab:help log10">log10</a>, <a href="matlab:help exp">exp</a>, <a href="matlab:help logm">logm</a>, <a href="matlab:help reallog">reallog</a>.
+
+    <a href="matlab:doc log">Reference page for log</a>
+    <a href="matlab:matlab.internal.language.introspective.overloads.displayOverloads('log')">Other functions named log</a>
+
+who
+
+Your variables are:
+
+A    D    a    b    d    y    
+B    Z    ans  c    x    
+
+clear A
+who
+
+Your variables are:
+
+B    Z    ans  c    x    
+D    a    b    d    y    
+
+clear 
+who
+diary off

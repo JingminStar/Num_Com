@@ -1,0 +1,162 @@
+a = exp(1)
+
+a =
+
+    2.7183
+
+myFun = @(x) exp(x) + 3
+
+myFun =
+
+  <a href="matlab:helpPopup function_handle" style="font-weight:bold">function_handle</a> with value:
+
+    @(x)exp(x)+3
+
+myFun = @(x) exp(x) + 3;
+myFun(1)
+
+ans =
+
+    5.7183
+
+myFun1 =@(x, y) x^2+y^2
+
+myFun1 =
+
+  <a href="matlab:helpPopup function_handle" style="font-weight:bold">function_handle</a> with value:
+
+    @(x,y)x^2+y^2
+
+myFun1(1,2)
+
+ans =
+
+     5
+
+myDiff = @(f, x, h) (f(x+h)-f(x-h))/(2h)
+ myDiff = @(f, x, h) (f(x+h)-f(x-h))/(2h)
+                                       
+{Error: Invalid expression. Check for missing
+multiplication operator, missing or unbalanced
+delimiters, or other syntax error. To construct
+matrices, use brackets instead of parentheses.
+} 
+myDiff = @(f, x, h) (f(x+h)-f(x-h))/(2*h)
+
+myDiff =
+
+  <a href="matlab:helpPopup function_handle" style="font-weight:bold">function_handle</a> with value:
+
+    @(f,x,h)(f(x+h)-f(x-h))/(2*h)
+
+myDif(myFun, 0, 0.01)
+{Undefined function or variable 'myDif'.
+} 
+myDiff(myFun, 0, 0.01)
+
+ans =
+
+    1.0000
+
+format long
+myDiff(myFun, 0, 0.01)
+
+ans =
+
+   1.000016666750003
+
+[s, S]= myPartialSum(10)
+
+s =
+
+   2.928968253968254
+
+
+S =
+
+   2.928968253968254
+
+[s, S]= myPartialSum(10);
+[s, S]= myPartialSum(10^3);
+s-S
+
+ans =
+
+    -2.664535259100376e-15
+
+[s, S]= myPartialSum(10^5);
+s-S
+
+ans =
+
+     7.283063041541027e-14
+
+[s, S]= myPartialSum(10^7);
+s-S
+
+ans =
+
+     2.692956968530780e-12
+
+demo_PartialSum
+
+ans =
+
+    10
+
+
+ans =
+
+     0
+
+
+ans =
+
+        1000
+
+
+ans =
+
+    -2.664535259100376e-15
+
+
+ans =
+
+      100000
+
+
+ans =
+
+     7.283063041541027e-14
+
+
+ans =
+
+     1000000
+
+
+ans =
+
+     7.833733661755105e-13
+
+
+ans =
+
+    10000000
+
+
+ans =
+
+     2.692956968530780e-12
+
+xL=0; xR=2*pi;
+N=100;
+x = linspace(xL, xR, N);
+y = sin(x);
+plot(x, y)
+plot(x, y, '*b')
+hold on
+plot(x, cos(x), 'r.-')
+ylabel('y')
+figure(2)
+diary off

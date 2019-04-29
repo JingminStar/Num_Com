@@ -1,0 +1,29 @@
+n=6; H=hilb(n); x=ones(n,1);b=H*x;
+xc=H\b; 
+cond(H,inf)
+
+ans =
+
+   2.9070e+07
+
+norm(xc-x,inf)/norm(x,inf)
+
+ans =
+
+   4.7565e-10
+
+
+n=10; H=hilb(n); x=ones(n,1);b=H*x;
+xc=H\b;
+cond(H,inf)
+
+ans =
+
+   3.5353e+13
+norm(xc-x,inf)/norm(x,inf)
+
+ans =
+
+   4.1207e-04
+
+diary off

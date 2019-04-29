@@ -1,0 +1,7 @@
+spec_rad_B
+ r=  4, The spectral radius of B for Jacobi is 0.2744, for GS is 0.1211
+ r= 10, The spectral radius of B for Jacobi is 0.2646, for GS is 0.0966
+ r= 20, The spectral radius of B for Jacobi is 0.1763, for GS is 0.0690
+ r= 50, The spectral radius of B for Jacobi is 0.1195, for GS is 0.0502
+ r=100, The spectral radius of B for Jacobi is 0.0857, for GS is 0.0308
+diary off

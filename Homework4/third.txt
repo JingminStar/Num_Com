@@ -1,0 +1,5 @@
+compare
+delta = 0.01000000  solution =    7.0000000000    3.0000000000 relative error = 3.172066e-15 cond(A) = 6.0200e+02
+delta = 0.00000100  solution =    7.0000000005    2.9999999997 relative error = 7.404046e-11 cond(A) = 6.0000e+06
+delta = 0.00000001  solution =    6.9999999189    3.0000000406 relative error = 1.158603e-08 cond(A) = 6.0000e+08
+diary off

@@ -1,0 +1,15 @@
+%% Expected redunction factor for the second order
+(1/0.5)^2
+
+ans =
+
+     4
+
+%% Expected redunction factor for the forth order
+(1/0.5)^4
+
+ans =
+
+    16
+
+diary off

@@ -1,0 +1,12 @@
+Jaco_GS_test
+
+ Run Jacobi Method:
+ Total iterarion = 88 
+ Final answer=2.00000000000000 -1.00000000000000 1.00000000000000 error = 0.00000000000000
+
+ Run Gauss-Seidel Method:
+ Total iterarion = 42 
+ Final answer=2.00000000000000 -1.00000000000000 1.00000000000000 error = 0.00000000000000
+
+ Total running time of my code is 0.00016326162164
+diary off

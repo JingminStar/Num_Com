@@ -1,0 +1,39 @@
+n=6;H-hilb(n); x= ones(n,1); b=H*x;
+{Undefined function or variable 'H'.
+} 
+n=6;H=hilb(n); x= ones(n,1); b=H*x;
+xc = H\b
+
+xc =
+
+   0.999999999998961
+   1.000000000029569
+   0.999999999800257
+   1.000000000518986
+   0.999999999427600
+   1.000000000225410
+
+cond(H,inf)
+
+ans =
+
+     2.907027900118468e+07
+
+n=10;H=hilb(n); x= ones(n,1); b=H*x;
+xc = H\b;
+norm(x-xc.inf)/norm(x,inf)
+{Dot indexing is not supported for variables of this type.
+} 
+norm(x-xc,inf)/norm(x,inf)
+
+ans =
+
+     3.592618853218710e-04
+
+cond(H,inf)
+
+ans =
+
+     3.535233350016355e+13
+
+diary off

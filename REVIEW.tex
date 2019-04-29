@@ -1,0 +1,375 @@
+ \documentclass[10pt]{article}
+% \geometry{left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm}
+\usepackage{geometry}
+\geometry{left=3cm,right=3cm,top=3cm,bottom=3cm}
+\usepackage{datetime}
+\usepackage{tikz}
+\usepackage{color,array,graphics}
+\usepackage{enumerate}
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\usepackage{comment}
+\usepackage{import}
+\usepackage{CJKutf8}
+\usepackage[]{algorithm2e}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\usepackage{amssymb} %maths
+\usepackage{amsmath} %maths
+%\numberwithin{equation}{section}
+\graphicspath{ {images/} }
+\usepackage{float}
+
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+
+%\tcbuselibrary{most}
+
+
+
+
+% for coding
+\usepackage{listings}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\newcommand{\since}{$\because$}
+\newcommand{\so}{$\therefore$}
+
+\lstset{frame=tb,
+	language=Python,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=4
+}
+
+
+\usepackage{fancyhdr}                                
+\usepackage{lastpage}                                           
+\usepackage{layout}                                             
+%\pagestyle{empty}                   %不设置页眉页脚            
+\footskip = 10pt                                                
+\pagestyle{fancy}                    % 设置页眉                 
+\lhead{Jingmin Sun(sunj8)}
+%\chead{PHYS 4330 Theoretical Mechanics(2018)}   
+\chead{MATH 4800 Numerical Computing (2019-Spring)}         
+\rhead{RIN:661849071}                   
+\cfoot{page \thepage\ of \pageref{LastPage}}                        
+%\rfoot{root left}%                                                     
+%\lfoot{root right}                                                  
+\renewcommand{\headrulewidth}{2pt}  %页眉线宽，设为0可以去页眉线
+\setlength{\skip\footins}{0.5cm}    %脚注与正文的距离           
+\renewcommand{\footnotesize}{}      %设置脚注字体大小           
+\renewcommand{\footrulewidth}{0pt}  %脚注线的宽度  
+% \lhead{page \thepage\ of \pageref{LastPage}}                    
+             
+
+
+\setlength\parindent{0pt}   
+
+
+\begin{document}
+
+	\begin{center} 
+		%\begin{minipage}{\textwidth} 
+		\centering{ {\textbf{\huge{NC Lecture Notebook}}}} \\
+		%\end{minipage} 
+	\end{center} 
+	\tableofcontents
+	\pagebreak
+\section{Introduction}
+ 	 Examples:
+ 	 \begin{enumerate}
+ 	 \item  Compute the partial sums of the harmonic series \[\sum_{k=1}^n \frac{1}{k}\]
+ 	 \begin{itemize}
+ 	 \item
+ 	$S(n) = 1+\frac{1}{2}+\cdots +\frac{1}{n-1}+\frac{1}{n}$
+ 	\item
+ 	$s(n) =\frac{1}{n} +\frac{1}{n-1}+\cdots +\frac{1}{2}+1$
+ 	 \end{itemize}
+ 	 
+ 	 Mathematically, $S(n) = s(n)$; Computationally, they're not.
+ 	 
+ 	 The difference growth with $n$
+ 	 
+ 	\item
+ 	Let $f(x) = \sqrt{x}$ for $x>0$, and we know $f'(x) = \dfrac{1}{2\sqrt{x}}$ 
+ 	
+ 	Define a function \begin{align*}
+ 	y(k) &=\dfrac{f(16+k)-f(16)}{k}\\
+ 	&=\dfrac{\sqrt{16+k}-4}{k}
+ 	\end{align*}
+ then, $\lim_{k\rightarrow 0} y (k) = f'(16) = \frac{1}{8}$	
+ 
+ As k decrease to $k = 10^{-12}$, $y(k)$ is a good approximation for $f'(16) = \dfrac{1}{8}$, when k further decrease, y(k) starts to oscillates and the  errors are visible; after k drops below $10^{-14}$, the computed $y(k)$ is around 0. 
+ \[\dfrac{\sqrt{16+k}-4}{k} = \dfrac{1}{\sqrt{16+k}+4}\]$\dfrac{\sqrt{16+k}-4}{k}$ goes to 0.
+ 
+ \item
+ Consider the function $y(x) = (x-1)^8$ and it's expanded form \[y(x) = x^8 -8x^7+28x^6-56x^5+70x^4-56x^3+28x^2-8x+1\]
+ 
+ Again, two mathematically identical function are nor the same computationally. 
+ 
+ The expected form even leads to negative values.
+ \end{enumerate} 	
+ \subsection{Computational Complexity : Polynomial Evaluation}
+ 
+ \[p(x) = 2x^4+3x^3-3x^2+5x-1\]
+ \begin{enumerate}
+ \item Straight Forward:
+ 
+ \begin{align*}
+ 2 \cdot \frac{1}{2} \cdot  \frac{1}{2} \cdot  \frac{1}{2} \cdot  \frac{1}{2} && 4(x)\\
+ 3 \cdot  \frac{1}{2} \cdot  \frac{1}{2} \cdot  \frac{1}{2} && 3(x)\\
+  (-3)\cdot  \frac{1}{2} \cdot  \frac{1}{2} && 2(x)\\
+  5\cdot \frac{1}{2} &&1(x)
+ \end{align*}
+ $$N_x = 10 ,N_+=4$$
+ \item Storage
+ \begin{align*}
+ \left(\dfrac{1}{2}\right)^2 &=\dfrac{1}{4} &&1(x)\\
+   \left(\dfrac{1}{2}\right)^3 &= \left(\dfrac{1}{2}\right)^2\cdot \dfrac{1}{2} = \dfrac{1}{8} &&1(x)\\
+   \left(\dfrac{1}{2}\right)^4 &=\left(\dfrac{1}{2}\right)^3\cdot \dfrac{1}{2} = \dfrac{1}{16} &&1(x)\\
+ \end{align*}
+ multiply by coefficient $4(x)$\\
+ $$N_x = 7, N_+=4$$
+ \item Horner's method:
+ \begin{align*}
+ P(x)&=x(2x^3+3x^2-3x+5)-1\\
+ &=x(x(2x^2+3x-3)+5)-1\\
+  &=x(x(x(2x+3)-3)+5)-1\\
+ \end{align*}
+ $$N_x = 4 , N_+=4$$
+ 
+\begin{align*}
+N_+ =4\\
+N_x &=\begin{cases}
+\sum_{k=1}^d k &=\dfrac{d(1+d)}{2}\\
+2d - 1\\
+d
+\end{cases}
+\end{align*}
+ \end{enumerate}
+   \subsection{Floating Point Arithmetic}
+   Consider -321.416: (Decimal Representation)
+   \begin{align*}
+   -321.416&=-(3\cdot 10^2 + 2\cdot 10 +1\cdot 0 + 4\cdot 10^{-1}+1\cdot 10^{-2}+6\cdot 10^{-3})
+   \end{align*}
+   
+   A similar representation is used in computer: floating - point arithmetic:
+   $$ - .321416 \times 10^3$$
+   sign, fraction, base, exponent
+   
+   In general, $$\pm f \times \beta^e$$
+   where $\beta =2$: binary number\\
+   $\beta =10$: decimal number\\
+   $\beta =16$: hexadecimal number
+   $f$: fraction, digits from $0,1,\cdots \beta-1$\\
+   $e$: exponent, digits from $0,1,\cdots \beta-1$
+   
+   Binary Number: 
+   \[b_m \cdots b_2b_1b_0. a_1a_2\cdots a_n\](all integer)
+   
+   Each digit $b_i$, $a_j$ takes $0$ or $1$.
+   
+   This number in base 10, is $$b_m\cdot 2^m+b_{m-1}\cdot 2^{m-1}+\cdots + b_1\cdot 2^1+b_0\cdot 2^0 + a_1\cdot 2^{-1} +  a_2\cdot 2^{-2} + \cdots +a_n2^{-n}$$
+   
+   Note: \begin{align*}
+   (0.1101)_2 &= (1.101)_2\cdot 2^{-1}\\
+   &= (0.001101)_2\cdot 2^3
+   \end{align*}
+   
+   To convert between binary ($\beta =2$) and decimal  ($\beta =10$)
+   
+   Example:
+   \begin{enumerate}
+   \item $x = (1.1011)_2$ convert x to a decimal number:\begin{align*}
+   x&=1\cdot 2^0+1\cdot 2^{-1} + 0 \cdot 2^{-2}+1\cdot 2^{-3}+1\cdot 2^{-4}\\
+   &= 1+\frac{1}{2}+0+\frac{1}{8}+\frac{1}{16}\\
+   &=\frac{27}{16}
+   \end{align*}
+   \item
+   \begin{align*}
+   x &= (1.1010 \cdots 10)_2\\
+   &= (1.\bar{10})_2\\
+   &=1\cdot 2^0+1\cdot 2^{-1} +1\cdot 2^{-3}+1\cdot 2^{-5}+\cdots
+   \end{align*}
+   Recall geometric series:\[1+r+r^2+\cdots = \frac{1}{1-r}\] if $|r| < 1$
+   
+   \begin{align*}
+   x &= 1+\frac{1}{2}+\left(\dfrac{1}{2}\right)^3+\left(\dfrac{1}{2}\right)^5+\cdots\\
+   &=1+\dfrac{1}{2}\left(1+\dfrac{1}{4}+\left(\dfrac{1}{4}\right)^2+\cdots\right)\\
+   &=1+\dfrac{1}{2}\cdot \dfrac{1}{1-\frac{1}{4}}\\
+   &=1+\frac{2}{3}\\
+   &=\frac{5}{3}
+   \end{align*}
+   Alternatively, \begin{align*}
+   x &=(1.\bar{10})_2\\
+   &=1\cdot 2^0+(0.\bar{10})_2\\
+   &=1+(10.\bar{10})_2\cdot  2^{-2}
+   \end{align*}
+   
+   \begin{align*}
+    y &=(0.\bar{10})_2\\
+    &=(10.\bar{10})_2 \cdot 2^{-2}\\
+    &=\{(10)_2\cdot 2^{-2}+(0.\bar{10})_2\cdot  2^{-2}\}\\
+    y&=(2+y)\cdot 2^{-2}\\
+    4y&=2+y\\
+    y&=\frac{2}{3}\\
+    x&=1+y\\
+    &=\frac{5}{3}
+   \end{align*}
+   \item Convert $14.8125$ to a binary number:
+   
+   We are looking for \[14.8125 = (b_mb_{m-1}\cdots b_1b_0.a_1a_2\cdots a_n)_2\]
+   
+   Fractional part: \begin{align*}
+   0.8125&= (.a_1a_2\cdots a_n)_2\\
+   &=a_1\cdot 2^{-1}+a_2\cdot 2^{-2}+\cdots +a_n\cdot 2^{-n}
+   \end{align*}
+   \begin{itemize}
+   \item $*2$
+   
+   \begin{align*}
+   1.6250&= a_1 + a_2\cdot 2^{-1}+ \cdots a_n \cdot 2^{-(n-1)}\\
+   a_1 &=1\\
+     0.6250&=  a_2\cdot 2^{-1}+ \cdots a_n \cdot 2^{-(n-1)}\\
+   \end{align*}
+\item $*2$
+\begin{align*}
+1.2500 &=  a_2+ a_3\cdot 2^{-1}\cdots a_n \cdot 2^{-(n-2)}\\
+a_2&=1
+\end{align*}
+\item $*2$
+\begin{align*}
+0.25 \cdot 2 &= 0.50 && a_3=0\\
+0.50 \cdot 2 &=1 &&a_4=1
+\end{align*}
+\[\therefore 0.8125 = (.1101)_2\]
+   \end{itemize}
+   Collect Integer part ordered from radix point:
+   
+   Integer part: \begin{align*}
+   14 &= (b_m\cdots b_2b_1b_0)_2\\
+   &=b_m \cdot 2^m + b_{m-1} \cdot 2^{m-1} + \cdots b_1\cdot 2^1 + b_0
+   \end{align*}
+Divided by 2: 
+\begin{align*}
+\dfrac{14}{2}&= 7 R 0\\
+&= (b_m\cdot 2^{m-1}+\cdots b_1)R b_0\\
+\dfrac{7}{2} &= 3 R 1 &&b_1\\
+\dfrac{3}{2} &= 1 R 1 &&b_2\\
+\dfrac{1}{2} &= 0 R 1 &&b_3\\
+\therefore 14 &=(1110)_2
+\end{align*}
+\[\therefore 14.8125 = (1110.1101)_2\]
+\end{enumerate}  
+\subsubsection{Floating point number}
+$$\pm f \times \beta^e$$  
+
+f(fraction) : the number of digits in f determines the precision.
+
+e(exponent):the number of digits in e determines the range of representable numbers.
+
+We follow IEEE 754 floating point standard:
+\begin{enumerate}
+
+\item Normalized form: $f = 1.b_m b_{m-1}\cdots b_1b_0$, 
+$(0.0101010\cdots)$
+
+\item
+Advantage: leading 1 needs not be stored
+
+\begin{itemize}
+\item
+ 32-bit single precision: \\
+ sign : 1 -bit \\
+ exponent : 8-bits\\
+ fraction: 23 -bits
+ \item
+ 64 - bit double precision:\\
+  sign : 1 -bit \\
+ exponent : 11-bits\\
+ fraction: 52-bits
+\end{itemize}
+
+\item
+The represented number is \[(-1)^s\cdot (1+f)\cdot 2^{e-e_0}\]
+\begin{itemize}
+\item  e: unsigned, $e^0$: exponent bias
+\item $e-e^0$: can be either positive or negative ( negative represent small number)
+\end{itemize}
+Let's focus on "e" or equivalently $2^{e-e_0}$
+\begin{itemize}
+\item Single Precision:
+\begin{align*}
+e &\in [e_{min}, e_{max}]\\
+e_{min} &= (0\cdots 0 1)  (\text{8 bit}) =1\\ 
+e_{max} &= (11\cdots 10)\\& = 1\cdot (2 + 2^2 +\cdots + 2^7)\\
+&=2\cdot \left(\dfrac{1-2^7}{1-2}\right)\\
+&=254\\
+\implies 2^{e- e_0}& \in[2^{-126},2^{127}] &e_0 = 127\\&\approx [10^{-38},10^{38}]
+\end{align*}
+\item
+\begin{align*}
+e&\in [e_{min}, e_{max}]\\
+e_{min}&=1\\
+e_{max}&= 2^1+2^2+\cdots +2^{10}\\
+&=2046\\
+e_0 &=1023\\
+2^{e-e_0}&\in [2^{-1022}, 2^{1023}]\\
+&\approx[10^{-308}, 10^{308}]
+\end{align*}
+\end{itemize}
+
+\subsubsection{fraction f and precision}
+
+Using double-precision on an example: \begin{itemize}
+\item How to store a number
+\item How to do calculation
+\end{itemize}
+
+Consider \begin{align*}
+x_1 &= \dfrac{27}{16} = (1.1011)_2\\
+x_2&=\dfrac{5}{3} = (1.\bar{10})_2\\
+x_3 &=\dfrac{2}{3} = (.\bar{10})_2 = (1.\bar{01})_2\cdot 2^{-1}\\
+x_4 &=1 &=(1.0)_2\\
+x_5 &=1\times 2^{-52}\\
+x_6 &= 1\times 2^{-53}
+\end{align*}
+
+\begin{align*}
+x_1 &: 1.\boxed{101100\cdots 0} (52 bits)\\
+x_4 &: 1.\boxed{00\cdots 0} (52 bits)\\
+x_5&: 1.\boxed{00\cdots 0} (52 bits)\times 2^{-52}\\
+x_6&: 1.\boxed{00\cdots 0} (52 bits)\times 2^{-53}\\
+\end{align*}
+Now $x_2$, $x_3$:
+
+\begin{align*}
+x_2 &: 1.\boxed{101010\cdots 10}10\cdots\\
+x_3&:1\boxed{0101\cdots 01}0101\cdots \times 2^{-1}
+\end{align*}
+
+We follow: IEEE rounding to the nearest rule:
+$x\rightarrow fl(x) $
+ \end{enumerate}
+\end{document}
+
+
+

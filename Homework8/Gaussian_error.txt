@@ -1,0 +1,20 @@
+two_point_Gaussian
+log2(reduc_fac)
+
+ans =
+
+                -Inf
+   3.540005251874583
+   3.823803895298594
+   3.946391644477345
+
+
+three_point_Gaussian
+log2(reduc_fac)
+
+ans =
+
+                -Inf
+   5.048095904054325
+   5.592623206358342
+   5.865668602584057
